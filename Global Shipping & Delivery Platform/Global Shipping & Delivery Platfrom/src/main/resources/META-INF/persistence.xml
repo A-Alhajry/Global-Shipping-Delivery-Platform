@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" 
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">                                                                  
+	<persistence-unit name="GSDP_MSSQL" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>qu.master.adbs.gsdp.entity.Account</class>
+		<class>qu.master.adbs.gsdp.entity.Address</class>
+		<class>qu.master.adbs.gsdp.entity.City</class>
+		<class>qu.master.adbs.gsdp.entity.Country</class>
+		<class>qu.master.adbs.gsdp.entity.Customer</class>
+		<class>qu.master.adbs.gsdp.entity.Employee</class>
+		<class>qu.master.adbs.gsdp.entity.PaymentCreditCard</class>
+		<class>qu.master.adbs.gsdp.entity.PaymentMethod</class>
+		<class>qu.master.adbs.gsdp.entity.PaymentMethodType</class>
+		<class>qu.master.adbs.gsdp.entity.PaymentPaypal</class>
+		<class>qu.master.adbs.gsdp.entity.ShipmentStatusType</class>	
+		<class>qu.master.adbs.gsdp.entity.Shipment</class>
+		<class>qu.master.adbs.gsdp.entity.ShipmentHistory</class>
+		<class>qu.master.adbs.gsdp.entity.ShipmentPayment</class>
+        <class>qu.master.adbs.gsdp.entity.Supplier</class>
+		<properties>
+			<!-- EclipseLink Configuration -->
+			<property name="eclipselink.target-database" value="SqlServer"></property>
+			<property name="eclipselink.ddl-generation" value="none"></property>
+			<property name="eclipselink.Logging.Level" value="SEVERE"></property>
+			<property name="eclipselink.weaving.internal" value="false"></property>
+			
+			<!-- JDBC Configuration -->
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;DatabaseName=GSDP"></property>
+			<property name="javax.persistence.jdbc.user" value="aalhajry"></property>
+			<property name="javax.persistence.jdbc.password" value="Mofa$hopPa$$word09876"></property>			
+		</properties>
+	</persistence-unit>                          
+</persistence>
