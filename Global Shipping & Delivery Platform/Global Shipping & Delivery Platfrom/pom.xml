@@ -26,6 +26,26 @@
 <!--     	<artifactId>ojdbc8</artifactId> -->
 <!--     	<version>12.2.0.1</version> -->
 <!--     </dependency> -->
+
+	<!-- BSON Jackson Library -->
+	<dependency>
+		<groupId>de.undercouch</groupId>
+		<artifactId>bson4jackson</artifactId>
+		<version>2.9.2</version>
+	</dependency>
+	<!-- MongoDB Java Driver -->
+	<dependency>
+		<groupId>org.mongodb</groupId>
+		<artifactId>mongo-java-driver</artifactId>
+		<version>3.11.2</version>
+	</dependency>
+	
+	<!-- Jongo Library -->
+	<dependency>
+		<groupId>org.jongo</groupId>
+		<artifactId>jongo</artifactId>
+		<version>1.4.0</version>
+	</dependency>
     
   	<!-- Sql Server JDBC Library -->
   	<dependency>
