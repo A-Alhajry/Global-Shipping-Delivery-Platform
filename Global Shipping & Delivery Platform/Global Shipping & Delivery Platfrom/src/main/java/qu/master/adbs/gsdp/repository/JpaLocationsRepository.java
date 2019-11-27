@@ -2,6 +2,7 @@ package qu.master.adbs.gsdp.repository;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,6 +12,8 @@ import qu.master.adbs.gsdp.entity.Address;
 import qu.master.adbs.gsdp.entity.City;
 import qu.master.adbs.gsdp.entity.Country;
 
+@ApplicationScoped()
+@RepositoryModeType(RepositoryMode.JPA)
 public class JpaLocationsRepository implements LocationsRepository {
 	
 	EntityManagerFactory emf;

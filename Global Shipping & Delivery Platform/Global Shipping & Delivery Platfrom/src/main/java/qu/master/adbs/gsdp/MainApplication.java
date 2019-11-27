@@ -1,5 +1,6 @@
 package qu.master.adbs.gsdp;
 
+import qu.master.adbs.gsdp.repository.MongoManager;
 import qu.master.adbs.gsdp.service.RestApplication;
 
 public class MainApplication {
@@ -10,7 +11,8 @@ public class MainApplication {
 	public static void main(String[] args) {
 		
 		System.out.println("Welcome to Global Shipping & Delivery Platfrom ! ");
-		//insertTestData();
+		//var client = MongoManager.getCollection("testcc");
+		insertTestData();
 		startService();
 		
 	}

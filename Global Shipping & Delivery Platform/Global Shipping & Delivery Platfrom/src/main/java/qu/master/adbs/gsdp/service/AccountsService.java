@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import qu.master.adbs.gsdp.entity.Customer;
 import qu.master.adbs.gsdp.entity.UserCredentials;
-import qu.master.adbs.gsdp.repository.AccountsRepository;
+import qu.master.adbs.gsdp.repository.*;
 
 @Path("/accounts")
 @ApplicationScoped
@@ -21,6 +22,7 @@ import qu.master.adbs.gsdp.repository.AccountsRepository;
 public class AccountsService extends AbstractService {
 	
 	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	private AccountsRepository accountsRepository;
 	
 	private String test = "";
@@ -80,5 +82,12 @@ public class AccountsService extends AbstractService {
 		catch (Exception e) {
 			return error(e.getMessage());
 		}
+	}
+	
+	public AccountsRepository getAccountsRepository() {
+		return accountsRepository;
+	}
+	public void setAccountsRepository(@Named("MongoAccountsRepository") AccountsRepository accountsRepository) {
+		this.accountsRepository = accountsRepository;
 	}
 }

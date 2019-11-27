@@ -30,7 +30,7 @@ public class ShipmentsService extends AbstractService {
 	@Inject
 	private ShipmentsRepository shipmentsRepository;
 	
-	@Inject
+	//@Inject
 	private AccountsRepository accountsRepository;
 	
 	@POST

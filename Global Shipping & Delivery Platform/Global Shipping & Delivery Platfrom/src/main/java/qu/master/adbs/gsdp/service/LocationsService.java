@@ -13,6 +13,8 @@ import qu.master.adbs.gsdp.entity.Address;
 import qu.master.adbs.gsdp.entity.Customer;
 import qu.master.adbs.gsdp.repository.AccountsRepository;
 import qu.master.adbs.gsdp.repository.LocationsRepository;
+import qu.master.adbs.gsdp.repository.RepositoryMode;
+import qu.master.adbs.gsdp.repository.RepositoryModeType;
 
 @Path("/locations")
 @ApplicationScoped
@@ -20,9 +22,11 @@ import qu.master.adbs.gsdp.repository.LocationsRepository;
 public class LocationsService extends AbstractService {
 	
 	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	LocationsRepository locationsRepository;
 	
 	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	AccountsRepository accountsRepository;
 	
 	@GET

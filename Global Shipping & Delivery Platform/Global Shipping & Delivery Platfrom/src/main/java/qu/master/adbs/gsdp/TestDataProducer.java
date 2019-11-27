@@ -21,20 +21,21 @@ import qu.master.adbs.gsdp.repository.JpaAccountsRepository;
 import qu.master.adbs.gsdp.repository.JpaLocationsRepository;
 import qu.master.adbs.gsdp.repository.JpaShipmentsRepository;
 import qu.master.adbs.gsdp.repository.LocationsRepository;
+import qu.master.adbs.gsdp.repository.*;
 import qu.master.adbs.gsdp.repository.ShipmentsRepository;
 
 public class TestDataProducer {
 	
 	public static void insertTestData(String persistenceUnitName) {
 		try {
-			insertCustomers(persistenceUnitName);
-			insertShipmentStatusesTypes(persistenceUnitName);
-			insertSuppliers(persistenceUnitName);
+			//insertCustomers(persistenceUnitName);
+//			insertShipmentStatusesTypes(persistenceUnitName);
+			//insertSuppliers(persistenceUnitName);
 			insertCountries(persistenceUnitName);
-			insertPaymentsMethodsTypes(persistenceUnitName);
-			insertShipments(persistenceUnitName);
-			insertShipmentsHistories(persistenceUnitName);
-			insertShipmentsPayments(persistenceUnitName);
+//			insertPaymentsMethodsTypes(persistenceUnitName);
+//			insertShipments(persistenceUnitName);
+//			insertShipmentsHistories(persistenceUnitName);
+//			insertShipmentsPayments(persistenceUnitName);
 		}
 		
 		catch (Exception e) {
@@ -43,7 +44,7 @@ public class TestDataProducer {
 	}
 	
 	private static void insertCustomers(String persistenceUnitName) {
-		AccountsRepository accountsRepo = new JpaAccountsRepository(persistenceUnitName);
+		AccountsRepository accountsRepo = new MongoAccountsRepository();
 		
 		Customer customer1 = new Customer();
 		customer1.setFirstName("Abdulrahman");
@@ -391,7 +392,7 @@ public class TestDataProducer {
 	}
 	
 	public static void insertSuppliers(String persistenceUnitName) {
-		AccountsRepository accRepo = new JpaAccountsRepository();
+		AccountsRepository accRepo = new MongoAccountsRepository();
 		
 		System.out.println("Start Adding Suppliers ... ");
 		
@@ -419,7 +420,7 @@ public class TestDataProducer {
 		
 	}
 	public static void insertCountries(String persistenceUnitName) {
-		LocationsRepository locRepo = new JpaLocationsRepository(persistenceUnitName);
+		LocationsRepository locRepo = new MongoLocationsRepository();
 		
 		System.out.println("Start Adding Countries ... ");
 		
