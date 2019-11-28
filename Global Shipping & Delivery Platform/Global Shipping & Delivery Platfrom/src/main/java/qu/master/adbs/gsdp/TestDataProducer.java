@@ -31,10 +31,10 @@ public class TestDataProducer {
 			//insertCustomers(persistenceUnitName);
 //			insertShipmentStatusesTypes(persistenceUnitName);
 			//insertSuppliers(persistenceUnitName);
-			insertCountries(persistenceUnitName);
+//			insertCountries(persistenceUnitName);
 //			insertPaymentsMethodsTypes(persistenceUnitName);
-//			insertShipments(persistenceUnitName);
-//			insertShipmentsHistories(persistenceUnitName);
+			insertShipments(persistenceUnitName);
+			insertShipmentsHistories(persistenceUnitName);
 //			insertShipmentsPayments(persistenceUnitName);
 		}
 		
@@ -84,8 +84,8 @@ public class TestDataProducer {
 	}
 	
 	private static void insertShipments(String persistenceUnitName) {
-		AccountsRepository accountsRepo = new JpaAccountsRepository(persistenceUnitName);
-		ShipmentsRepository shipRepo = new JpaShipmentsRepository(persistenceUnitName);
+		AccountsRepository accountsRepo = new MongoAccountsRepository();
+		ShipmentsRepository shipRepo = new MongoShipmentsRepository();
 		
 		List<Customer> customers = accountsRepo.getCustomers();
 		Customer customer1 = customers.get(0);
@@ -157,8 +157,8 @@ public class TestDataProducer {
 	
 	private static void insertShipmentsHistories(String persistenceUnitName) {
 
-		AccountsRepository accountsRepo = new JpaAccountsRepository(persistenceUnitName);
-		ShipmentsRepository shipRepo = new JpaShipmentsRepository(persistenceUnitName);
+		AccountsRepository accountsRepo = new MongoAccountsRepository();
+		ShipmentsRepository shipRepo = new MongoShipmentsRepository();
 		
 		List<Shipment> ships = shipRepo.getShipments();
 		Shipment s1 = ships.get(0);
@@ -364,7 +364,7 @@ public class TestDataProducer {
 	}
 	
 	private static void insertShipmentStatusesTypes(String persistenceUnitName) {
-		ShipmentsRepository shipRepo = new JpaShipmentsRepository(persistenceUnitName);
+		ShipmentsRepository shipRepo = new MongoShipmentsRepository();
 		
 		ShipmentStatusType status1 = new ShipmentStatusType();
 		status1.setId(1);

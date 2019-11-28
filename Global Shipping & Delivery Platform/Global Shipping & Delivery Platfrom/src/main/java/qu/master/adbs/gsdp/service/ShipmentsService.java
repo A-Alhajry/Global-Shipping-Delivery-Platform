@@ -20,6 +20,8 @@ import qu.master.adbs.gsdp.entity.ShipmentPayment;
 import qu.master.adbs.gsdp.entity.ShipmentStatusEnum;
 import qu.master.adbs.gsdp.entity.ShipmentStatusType;
 import qu.master.adbs.gsdp.repository.AccountsRepository;
+import qu.master.adbs.gsdp.repository.RepositoryMode;
+import qu.master.adbs.gsdp.repository.RepositoryModeType;
 import qu.master.adbs.gsdp.repository.ShipmentsRepository;
 
 @Path("/shipments")
@@ -28,9 +30,11 @@ import qu.master.adbs.gsdp.repository.ShipmentsRepository;
 public class ShipmentsService extends AbstractService {
 	
 	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	private ShipmentsRepository shipmentsRepository;
 	
-	//@Inject
+	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	private AccountsRepository accountsRepository;
 	
 	@POST

@@ -22,10 +22,10 @@ public class Shipment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Supplier supplier;
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Customer customer;
 	private String description;
 	private int numberOfItems;
@@ -113,6 +113,22 @@ public class Shipment {
 			return this.history.get(0);
 		}
 		
+	}
+	
+	public void setCustomerId(int customerId) {
+		if (this.customer == null) {
+			this.customer = new Customer();
+		}
+		
+		this.customer.setId(customerId);
+	}
+	
+	public void setSupplierId(int supplierId) {
+		if (this.supplier == null) {
+			this.supplier = new Supplier();
+		}
+		
+		this.supplier.setId(supplierId);
 	}
 	
 	//Committed out in order to test reports & search

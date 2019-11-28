@@ -66,6 +66,14 @@ public class ShipmentPayment {
 		this.addedDate = addedDate;
 	}
 	
+	public void addShipmentId(int shipmentId) {
+		if (this.shipment == null) {
+			this.shipment = new Shipment();
+		}
+		
+		this.shipment.setId(shipmentId);
+	}
+	
 	@PrePersist
 	public void prePersistEvent() {
 		this.addedDate = LocalDateTime.now();
