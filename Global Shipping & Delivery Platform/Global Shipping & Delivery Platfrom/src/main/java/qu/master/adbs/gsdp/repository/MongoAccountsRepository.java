@@ -26,7 +26,7 @@ import static com.mongodb.client.model.Updates.*;
 @RepositoryModeType(RepositoryMode.MONGO)
 public class MongoAccountsRepository implements AccountsRepository {
 
-	private final static String accountsCollection = "default";
+	private final static String accountsCollection = "accounts";
 	private final static String suppliersCollection = "suppliers";
 	private final static String accountsDocument = "accounts_document";
 	private final static String suppliersDocument = "suppliers_document";

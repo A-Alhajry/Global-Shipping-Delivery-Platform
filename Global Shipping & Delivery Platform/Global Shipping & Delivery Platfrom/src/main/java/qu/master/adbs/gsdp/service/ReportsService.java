@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import qu.master.adbs.gsdp.repository.ReportsRepository;
+import qu.master.adbs.gsdp.repository.*;
 
 @Path("/reports")
 @ApplicationScoped
@@ -19,6 +19,7 @@ import qu.master.adbs.gsdp.repository.ReportsRepository;
 public class ReportsService extends AbstractService {
 	
 	@Inject
+	@RepositoryModeType(RepositoryMode.MONGO)
 	ReportsRepository reportsRepository;
 	
 	

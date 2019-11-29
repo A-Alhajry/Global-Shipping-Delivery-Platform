@@ -58,7 +58,7 @@ public class MongoManager {
 	public static void insertLookup(int id, String desc, String lookupName) {
 		var mongoCollection = getCollection(lookupsCollection);
 		var document = new Document();
-		document.append("_id", id).append("description", desc).append("lookupname", lookupName);
+		document.append("typeid", id).append("description", desc).append("lookupname", lookupName);
 		mongoCollection.insertOne(document);
 	}
 	
@@ -70,7 +70,7 @@ public class MongoManager {
 			try (var mongoCursor = documents.cursor()) {
 				while (mongoCursor.hasNext()) {
 					var document = mongoCursor.next();
-					MongoLookup lookup = new MongoLookup(document.getInteger("_id"), document.getString("description"), document.getString("lookupname"));
+					MongoLookup lookup = new MongoLookup(document.getInteger("typeid"), document.getString("description"), document.getString("lookupname"));
 					lookups.add(lookup);
 				}
 			}

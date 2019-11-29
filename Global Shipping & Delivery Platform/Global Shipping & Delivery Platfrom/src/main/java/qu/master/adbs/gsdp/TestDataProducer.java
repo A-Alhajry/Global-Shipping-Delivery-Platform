@@ -28,14 +28,15 @@ public class TestDataProducer {
 	
 	public static void insertTestData(String persistenceUnitName) {
 		try {
-			//insertCustomers(persistenceUnitName);
-//			insertShipmentStatusesTypes(persistenceUnitName);
-			//insertSuppliers(persistenceUnitName);
-//			insertCountries(persistenceUnitName);
-//			insertPaymentsMethodsTypes(persistenceUnitName);
-			insertShipments(persistenceUnitName);
-			insertShipmentsHistories(persistenceUnitName);
-//			insertShipmentsPayments(persistenceUnitName);
+			/*
+			 * insertCustomers(persistenceUnitName);
+			 * insertShipmentStatusesTypes(persistenceUnitName);
+			 * insertSuppliers(persistenceUnitName); insertCountries(persistenceUnitName);
+			 */ insertPaymentsMethodsTypes(persistenceUnitName);
+			  insertShipments(persistenceUnitName);
+			  insertShipmentsHistories(persistenceUnitName);
+			 
+			//insertShipmentsPayments(persistenceUnitName);
 		}
 		
 		catch (Exception e) {
@@ -259,8 +260,8 @@ public class TestDataProducer {
 	
 	private static void insertShipmentsPayments(String persistenceUnitName) {
 
-		AccountsRepository accountsRepo = new JpaAccountsRepository(persistenceUnitName);
-		ShipmentsRepository shipRepo = new JpaShipmentsRepository(persistenceUnitName);
+		AccountsRepository accountsRepo = new MongoAccountsRepository();
+		ShipmentsRepository shipRepo = new MongoShipmentsRepository();
 		
 		List<Shipment> ships = shipRepo.getShipments();
 		Shipment s1 = ships.get(0);
@@ -287,13 +288,15 @@ public class TestDataProducer {
 		cc1.setExpiryDate(LocalDate.of(2022, 3, 4));
 		cc1.setCustomer(customer1);
 		cc1.setType('C');
-		shipRepo.addPaymentMethod(cc1);
+		cc1.setPaymentMethodType(ccType);
+		//shipRepo.addPaymentMethod(cc1);
 		
 		PaymentPaypal pp1 = new PaymentPaypal();
 		pp1.setAccountName("aalkhayarin");
 		pp1.setCustomer(customer1);
 		pp1.setType('P');
-		shipRepo.addPaymentMethod(pp1);
+		pp1.setPaymentMethodType(ppType);
+		//shipRepo.addPaymentMethod(pp1);
 		
 		PaymentCreditCard cc2 = new PaymentCreditCard();
 		cc2.setCreditCardNumber("6723-5633-1122-8900");
@@ -301,13 +304,15 @@ public class TestDataProducer {
 		cc2.setExpiryDate(LocalDate.of(2021, 3, 14));
 		cc2.setCustomer(customer2);
 		cc2.setType('C');
-		shipRepo.addPaymentMethod(cc2);
+		cc2.setPaymentMethodType(ccType);
+		//shipRepo.addPaymentMethod(cc2);
 		
 		PaymentPaypal pp2 = new PaymentPaypal();
 		pp2.setAccountName("fawazk");
 		pp2.setCustomer(customer2);
 		pp2.setType('P');
-		shipRepo.addPaymentMethod(pp2);
+		pp2.setPaymentMethodType(ppType);
+		//shipRepo.addPaymentMethod(pp2);
 		
 		PaymentCreditCard cc3 = new PaymentCreditCard();
 		cc3.setCreditCardNumber("9000-3456-7764-1209");
@@ -315,13 +320,15 @@ public class TestDataProducer {
 		cc3.setExpiryDate(LocalDate.of(2020, 11, 13));
 		cc3.setCustomer(customer3);
 		cc3.setType('C');
-		shipRepo.addPaymentMethod(cc3);
+		cc3.setPaymentMethodType(ccType);
+		//shipRepo.addPaymentMethod(cc3);
 		
 		PaymentPaypal pp3 = new PaymentPaypal();
 		pp3.setAccountName("josephl");
 		pp3.setCustomer(customer3);
 		pp3.setType('P');
-		shipRepo.addPaymentMethod(pp3);
+		pp3.setPaymentMethodType(ppType);
+		//shipRepo.addPaymentMethod(pp3);
 		
 		ShipmentPayment sp1 = new ShipmentPayment();
 		sp1.setShipment(s1);
@@ -496,7 +503,7 @@ public class TestDataProducer {
 	}
 	
 	private static void insertPaymentsMethodsTypes(String persistenceUnitName) {
-		ShipmentsRepository shipRepo = new JpaShipmentsRepository(persistenceUnitName);
+		ShipmentsRepository shipRepo = new MongoShipmentsRepository();
 		PaymentMethodType methodType1 = new PaymentMethodType();
 		methodType1.setId(1);
 		methodType1.setDescription("Credit Card");

@@ -1,5 +1,6 @@
 package qu.master.adbs.gsdp.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,7 @@ import qu.master.adbs.gsdp.entity.PaymentPaypal;
 import qu.master.adbs.gsdp.entity.Shipment;
 import qu.master.adbs.gsdp.entity.ShipmentHistory;
 import qu.master.adbs.gsdp.entity.ShipmentPayment;
+import qu.master.adbs.gsdp.entity.ShipmentStatusEnum;
 import qu.master.adbs.gsdp.entity.ShipmentStatusType;
 
 import static com.mongodb.client.model.Filters.*;
@@ -69,6 +71,7 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 		historyDocuments.add(this.getHistoryDocument(history));
 		Collections.reverse(historyDocuments);
 		mongoCollection.updateOne(shipmentFilter, new Document("$set", new Document("history", historyDocuments)));
+		mongoCollection.updateOne(shipmentFilter, new Document("$set", new Document("laststatusid", history.getShipmentStatus().getId())));
 
 		return history.getId();
 	}
@@ -157,6 +160,7 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 	public int addShipmentPayment(ShipmentPayment payment) {
 		var mongoCollection = MongoManager.getCollection(paymentsCollection);
 		payment.setId(MongoManager.getNewId(paymentDocument));
+		payment.getPaymentMethod().setId(payment.getId());
 		mongoCollection.insertOne(this.getPaymentDocument(payment));
 		return payment.getId();
 	}
@@ -211,8 +215,29 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 
 	@Override
 	public List<Shipment> searchShipments(int customerId, int supplierId, int statusId) {
-		// TODO Auto-generated method stub
-		return null;
+		var mongoCollection = MongoManager.getCollection(shipmentsCollection);
+		BasicDBObject filter = new BasicDBObject();
+		
+		if (customerId > 0) {
+			filter.append("customerid", customerId);
+		}
+		
+		if (supplierId > 0) {
+			filter.append("supplierid", supplierId);
+		}
+		
+		if (statusId > 0) {
+			filter.append("laststatusid", statusId);
+		}
+		
+		List<Shipment> shipments = new ArrayList<>();
+		try (var mongoCursor = mongoCollection.find(filter).iterator()) {
+			while (mongoCursor.hasNext()) {
+				shipments.add(this.getShipmentEntity(mongoCursor.next()));
+			}
+		}
+		
+		return shipments;
 	}
 
 	private Document getShipmentDocument(Shipment shipment) {
@@ -223,6 +248,9 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 		document.append("weight", shipment.getWeight());
 		document.append("numberofitems", shipment.getNumberOfItems());
 		document.append("description", shipment.getDescription());
+		document.append("laststatusid", ShipmentStatusEnum.RECEVIED.getId());
+		document.append("addeddate", shipment.getAddedDate());
+		document.append("laststatustime", LocalDateTime.now());
 		return document;
 	}
 
@@ -253,8 +281,7 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 	private Document getPaymentMethodDocument(PaymentMethod paymentMethod) {
 		Document document = new Document();
 		document.append("_id", paymentMethod.getId());
-		document.append("typeid", paymentMethod.getPaymentMethodType().getId());
-		document.append("typename", paymentMethod.getPaymentMethodType().getDescription());
+		document.append("methodtype", this.getPaymentTypeDocument(paymentMethod.getPaymentMethodType()));
 		
 		if (paymentMethod instanceof PaymentCreditCard) {
 			PaymentCreditCard cc = (PaymentCreditCard) paymentMethod;
@@ -270,6 +297,13 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 			document.append("accountname", pp.getAccountName());
 		}
 		
+		return document;
+	}
+	
+	private Document getPaymentTypeDocument(PaymentMethodType paymentType) {
+		Document document = new Document();
+		document.append("_id", paymentType.getId());
+		document.append("description", paymentType.getDescription());
 		return document;
 	}
 
@@ -306,13 +340,16 @@ public class MongoShipmentsRepository implements ShipmentsRepository {
 	
 	private ShipmentPayment getPaymentEntity(Document document) {
 		ShipmentPayment payment = new ShipmentPayment();
+		Document methodType = (Document) document.get("methodtype");
 		payment.setId(document.getInteger("_id"));
 		payment.setAmount(document.getDouble("amount"));
-		payment.setPaymentMethod(this.getPaymentMethodEntity(document, document.getInteger("typeid")));
+		payment.setPaymentMethod(this.getPaymentMethodEntity((Document) document.get("method")));
 		return payment;
 	}
 	
-	private PaymentMethod getPaymentMethodEntity(Document document, int type) {
+	private PaymentMethod getPaymentMethodEntity(Document document) {
+		Document methodType = (Document) document.get("methodtype");
+		int type = methodType.getInteger("_id");
 		if (type == PaymentMethodEnum.CREDIT_CARD.getId()) {
 			PaymentCreditCard cc = new PaymentCreditCard();
 			cc.setId(document.getInteger("_id"));
