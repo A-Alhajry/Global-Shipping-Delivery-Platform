@@ -28,15 +28,14 @@ public class TestDataProducer {
 	
 	public static void insertTestData(String persistenceUnitName) {
 		try {
-			/*
-			 * insertCustomers(persistenceUnitName);
-			 * insertShipmentStatusesTypes(persistenceUnitName);
-			 * insertSuppliers(persistenceUnitName); insertCountries(persistenceUnitName);
-			 */ insertPaymentsMethodsTypes(persistenceUnitName);
-			  insertShipments(persistenceUnitName);
-			  insertShipmentsHistories(persistenceUnitName);
-			 
-			//insertShipmentsPayments(persistenceUnitName);
+			
+			 insertCustomers(persistenceUnitName);
+			 insertShipmentStatusesTypes(persistenceUnitName);
+			 insertSuppliers(persistenceUnitName); insertCountries(persistenceUnitName);
+			 insertPaymentsMethodsTypes(persistenceUnitName);
+			 insertShipments(persistenceUnitName);
+			 insertShipmentsHistories(persistenceUnitName);			 
+			 insertShipmentsPayments(persistenceUnitName);
 		}
 		
 		catch (Exception e) {
